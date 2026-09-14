@@ -840,3 +840,87 @@ ul { list-style: none; }
   .section-title { font-size: 1.6rem; }
   .btn-xl { padding: 14px 28px; font-size: 1rem; }
 }
+
+/* ===== LOGO REAL ===== */
+.logo-img {
+  height: 52px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+.footer-logo-img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+/* ===== HEADER PHONE ===== */
+.header-phone {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-mid);
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.header-phone:hover { color: var(--blue); border-color: var(--blue); background: rgba(0,102,204,0.05); }
+.header-phone svg { flex-shrink: 0; }
+
+/* ===== FOOTER PHONE BUTTON ===== */
+.footer-phone-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: var(--transition);
+  margin-bottom: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.footer-phone-btn:hover { background: rgba(255,255,255,0.18); }
+
+/* ===== FOOTER ADDRESS ===== */
+.footer-address {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+  margin-top: 8px;
+}
+.footer-address svg { flex-shrink: 0; margin-top: 2px; opacity: 0.7; }
+
+/* ===== UNIME/FTC PROXIMITY BADGE in Academic Section ===== */
+.proximity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(35,154,0,0.12), rgba(0,102,204,0.08));
+  border: 1px solid rgba(35,154,0,0.25);
+  color: var(--text-dark);
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.proximity-badge .pin-icon { font-size: 1rem; }
+.proximity-badge strong { color: var(--green); }
+
+@media (max-width: 768px) {
+  .header-phone { display: none; }
+}
