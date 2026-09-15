@@ -1,6 +1,6 @@
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
 body {
   font-family: 'Poppins', sans-serif;
   color: #1E293B;
@@ -300,6 +300,7 @@ ul { list-style: none; }
   box-shadow: var(--shadow-sm);
   border: 1px solid var(--border);
   width: fit-content;
+  max-width: 100%;
 }
 .stat { text-align: center; }
 .stat strong { display: block; font-size: 1.5rem; font-weight: 800; color: var(--blue); }
@@ -325,6 +326,7 @@ ul { list-style: none; }
   border-radius: 14px;
   box-shadow: var(--shadow-md);
   animation: badge-float 4s ease-in-out infinite;
+  z-index: 2;
 }
 .hero-image-badge--bottom {
   top: auto;
@@ -804,12 +806,13 @@ ul { list-style: none; }
   .hero { padding: 100px 0 60px; }
   .hero-inner { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual { order: -1; }
-  .hero-image { height: 300px; }
-  .hero-image-badge { left: -8px; }
-  .hero-image-badge--bottom { right: -8px; }
-  .hero-stats { gap: 16px; padding: 16px 20px; }
+  .hero-image { height: 260px; }
+  .hero-image-wrapper { overflow: visible; }
+  .hero-image-badge { left: 8px; top: 16px; padding: 10px 14px; gap: 8px; }
+  .hero-image-badge--bottom { right: 8px; bottom: 16px; left: auto; padding: 10px 14px; }
+  .hero-stats { gap: 12px; padding: 14px 16px; width: 100%; }
   .hero-ctas { flex-direction: column; }
-  .hero-ctas .btn { justify-content: center; }
+  .hero-ctas .btn { justify-content: center; width: 100%; }
   
   /* Academic */
   .academic-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -834,11 +837,15 @@ ul { list-style: none; }
 
 @media (max-width: 480px) {
   .hero-title { font-size: 1.75rem; }
-  .hero-stats { flex-wrap: wrap; justify-content: center; }
+  .hero-stats { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px; }
   .stat-divider { display: none; }
+  .stat strong { font-size: 1.2rem; }
   .products-grid { grid-template-columns: 1fr; }
   .section-title { font-size: 1.6rem; }
   .btn-xl { padding: 14px 28px; font-size: 1rem; }
+  .hero-image-badge { font-size: 0.72rem; }
+  .hero-image-badge strong { font-size: 0.75rem; }
+  .container { padding: 0 16px; }
 }
 
 /* ===== LOGO REAL ===== */
