@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel Admin – Ofertas da Loja | Dentalmil</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0F172A;
+      color: #E2E8F0;
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+
+    :root {
+      --blue: #3B82F6;
+      --blue-dark: #2563EB;
+      --green: #22C55E;
+      --green-dark: #16A34A;
+      --red: #EF4444;
+      --red-dark: #DC2626;
+      --orange: #F97316;
+      --bg-1: #0F172A;
+      --bg-2: #1E293B;
+      --bg-3: #334155;
+      --border: #334155;
+      --text: #E2E8F0;
+      --text-mid: #94A3B8;
+      --text-light: #64748B;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    /* ====== LOGIN SCREEN ====== */
+    .login-screen {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+    .login-box {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .login-logo {
+      font-size: 2.5rem; margin-bottom: 8px;
+    }
+    .login-title {
+      font-size: 1.4rem; font-weight: 700; color: var(--text);
+      margin-bottom: 4px;
+    }
+    .login-subtitle {
+      font-size: 0.85rem; color: var(--text-mid); margin-bottom: 32px;
+    }
+    .login-field {
+      position: relative; margin-bottom: 16px; text-align: left;
+    }
+    .login-field label {
+      display: block; font-size: 0.8rem; font-weight: 600;
+      color: var(--text-mid); margin-bottom: 6px;
+    }
+    .login-field input {
+      width: 100%; padding: 12px 16px;
+      background: var(--bg-3); border: 1.5px solid var(--border);
+      border-radius: var(--radius); color: var(--text);
+      font-family: 'Poppins', sans-serif; font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+    }
+    .login-field input:focus { outline: none; border-color: var(--blue); }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: var(--blue); color: #fff; border: none;
+      border-radius: var(--radius); font-family: 'Poppins', sans-serif;
+      font-size: 1rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease; margin-top: 8px;
+    }
+    .login-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .login-error {
+      color: var(--red); font-size: 0.82rem; margin-top: 10px; display: none;
+    }
+
+    /* ====== ADMIN LAYOUT ====== */
+    .admin-wrap { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px; flex-shrink: 0;
+      background: var(--bg-2);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100;
+    }
+    .sidebar-logo {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .sidebar-logo-icon {
+      font-size: 1.8rem;
+    }
+    .sidebar-logo-text strong {
+      display: block; font-size: 1rem; font-weight: 700; color: var(--text);
+    }
+    .sidebar-logo-text span {
+      font-size: 0.72rem; color: var(--text-mid);
+    }
+    .sidebar-nav { padding: 20px 12px; flex: 1; }
+    .sidebar-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: 0.88rem; font-weight: 500; color: var(--text-mid);
+      cursor: pointer; transition: all 0.2s ease; margin-bottom: 4px;
+      border: none; background: none; width: 100%; text-align: left;
+      font-family: 'Poppins', sans-serif;
+    }
+    .sidebar-item:hover { background: var(--bg-3); color: var(--text); }
+    .sidebar-item.active { background: var(--blue); color: #fff; }
+    .sidebar-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .sidebar-footer {
+      padding: 16px; border-top: 1px solid var(--border);
+    }
+    .sidebar-store-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: 0.82rem; color: var(--text-mid);
+      transition: all 0.2s ease;
+    }
+    .sidebar-store-link:hover { color: var(--text); background: var(--bg-3); }
+
+    /* Main Content */
+    .admin-main {
+      margin-left: 260px;
+      flex: 1;
+      padding: 32px;
+      min-height: 100vh;
+    }
+
+    /* Topbar */
+    .admin-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 32px;
+    }
+    .admin-topbar h1 { font-size: 1.5rem; font-weight: 700; }
+    .admin-topbar p { font-size: 0.85rem; color: var(--text-mid); margin-top: 2px; }
+    .topbar-actions { display: flex; gap: 10px; }
+    .btn-admin {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 18px; border: none; border-radius: var(--radius);
+      font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .btn-admin svg { width: 16px; height: 16px; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-success { background: var(--green); color: #fff; }
+    .btn-success:hover { background: var(--green-dark); }
+    .btn-danger { background: var(--red); color: #fff; }
+    .btn-danger:hover { background: var(--red-dark); }
+    .btn-ghost { background: var(--bg-3); color: var(--text); }
+    .btn-ghost:hover { background: var(--border); }
+
+    /* Stats */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .stat-card-label { font-size: 0.75rem; font-weight: 600; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .stat-card-value { font-size: 2rem; font-weight: 800; color: var(--text); }
+    .stat-card-sub { font-size: 0.75rem; color: var(--text-light); margin-top: 4px; }
+
+    /* Grid layout */
+    .admin-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start; }
+
+    /* Product List */
+    .product-list-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+    }
+    .card-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-header h2 { font-size: 1rem; font-weight: 700; }
+    .card-header span { font-size: 0.78rem; color: var(--text-mid); }
+
+    .product-list { max-height: 560px; overflow-y: auto; }
+    .product-list::-webkit-scrollbar { width: 4px; }
+    .product-list::-webkit-scrollbar-track { background: var(--bg-2); }
+    .product-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .product-list-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px; border-bottom: 1px solid var(--border);
+      transition: background 0.2s ease; cursor: pointer;
+    }
+    .product-list-item:hover { background: var(--bg-3); }
+    .product-list-item:last-child { border-bottom: none; }
+    .product-thumb {
+      width: 52px; height: 52px; border-radius: 10px; overflow: hidden;
+      background: var(--bg-3); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .product-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .product-list-info { flex: 1; min-width: 0; }
+    .product-list-name { font-size: 0.88rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .product-list-cat { font-size: 0.72rem; color: var(--blue); font-weight: 500; margin-top: 2px; }
+    .product-list-price { font-size: 0.82rem; font-weight: 700; color: var(--green); white-space: nowrap; }
+    .product-list-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .icon-btn {
+      width: 32px; height: 32px; border: none; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .icon-btn svg { width: 14px; height: 14px; }
+    .icon-btn-edit { background: rgba(59,130,246,0.15); color: var(--blue); }
+    .icon-btn-edit:hover { background: var(--blue); color: #fff; }
+    .icon-btn-delete { background: rgba(239,68,68,0.15); color: var(--red); }
+    .icon-btn-delete:hover { background: var(--red); color: #fff; }
+
+    .empty-list {
+      padding: 48px 24px; text-align: center; color: var(--text-mid);
+    }
+    .empty-list-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .empty-list p { font-size: 0.88rem; }
+
+    /* Form Card */
+    .form-card {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      position: sticky; top: 24px;
+    }
+    .form-header {
+      padding: 20px 24px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .form-header h2 { font-size: 1rem; font-weight: 700; }
+    .form-mode-badge {
+      font-size: 0.7rem; font-weight: 700; padding: 3px 10px;
+      border-radius: 50px; background: rgba(59,130,246,0.15); color: var(--blue);
+    }
+    .form-mode-badge.edit { background: rgba(249,115,22,0.15); color: var(--orange); }
+
+    .form-body { padding: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      color: var(--text-mid); margin-bottom: 6px; text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-group label span { color: var(--red); }
+    .form-control {
+      width: 100%; padding: 10px 14px;
+      background: var(--bg-1); border: 1.5px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-family: 'Poppins', sans-serif; font-size: 0.88rem;
+      transition: border-color 0.2s ease;
+    }
+    .form-control:focus { outline: none; border-color: var(--blue); }
+    textarea.form-control { resize: vertical; min-height: 100px; }
+    select.form-control { cursor: pointer; }
+
+    /* Image Upload */
+    .img-upload-area {
+      border: 2px dashed var(--border); border-radius: 12px;
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: all 0.2s ease; position: relative;
+    }
+    .img-upload-area:hover { border-color: var(--blue); background: rgba(59,130,246,0.04); }
+    .img-upload-area input[type="file"] { display: none; }
+    .img-upload-icon { font-size: 2rem; margin-bottom: 8px; }
+    .img-upload-text { font-size: 0.8rem; color: var(--text-mid); }
+    .img-upload-text strong { color: var(--blue); cursor: pointer; }
+    .img-preview {
+      margin-top: 12px; position: relative; display: none;
+    }
+    .img-preview img {
+      width: 100%; height: 140px; object-fit: cover;
+      border-radius: 10px; border: 1px solid var(--border);
+    }
+    .img-preview-remove {
+      position: absolute; top: 6px; right: 6px;
+      width: 26px; height: 26px; background: rgba(0,0,0,0.6);
+      border: none; border-radius: 50%; color: #fff; font-size: 0.75rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Form actions */
+    .form-actions { display: flex; gap: 10px; margin-top: 24px; }
+    .form-actions .btn-admin { flex: 1; justify-content: center; }
+    .form-submit {
+      width: 100%; padding: 13px;
+      background: var(--green); color: #fff; border: none;
+      border-radius: var(--radius); font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s ease; margin-top: 8px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .form-submit:hover { background: var(--green-dark); transform: translateY(-1px); }
+    .form-submit.update { background: var(--orange); }
+    .form-submit.update:hover { background: #EA580C; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: var(--shadow); z-index: 9998;
+      transform: translateY(80px); opacity: 0;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      max-width: 360px;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .toast-msg { font-size: 0.85rem; font-weight: 500; color: var(--text); }
+    .toast.success { border-color: var(--green); }
+    .toast.success .toast-icon::after { content: '✅'; }
+    .toast.error { border-color: var(--red); }
+    .toast.error .toast-icon::after { content: '❌'; }
+
+    /* Confirm Dialog */
+    .confirm-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      z-index: 9997; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
+    }
+    .confirm-backdrop.open { opacity: 1; pointer-events: all; }
+    .confirm-box {
+      background: var(--bg-2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px; max-width: 360px; width: 100%;
+      text-align: center; box-shadow: var(--shadow);
+    }
+    .confirm-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .confirm-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .confirm-text { font-size: 0.85rem; color: var(--text-mid); margin-bottom: 24px; line-height: 1.5; }
+    .confirm-actions { display: flex; gap: 12px; }
+    .confirm-actions .btn-admin { flex: 1; justify-content: center; }
+
+    /* Scrollbar global */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-1); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-3); border-radius: 4px; }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .admin-grid { grid-template-columns: 1fr; }
+      .form-card { position: static; }
+    }
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; height: 60px; flex-direction: row; bottom: auto; }
+      .sidebar-nav, .sidebar-footer { display: none; }
+      .admin-main { margin-left: 0; margin-top: 60px; padding: 20px 16px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">🦷</div>
+      <h1 class="login-title">Painel Admin</h1>
+      <p class="login-subtitle">Dentalmil – Gerenciamento de Ofertas</p>
+      <div class="login-field">
+        <label for="login-password">Senha de Acesso</label>
+        <input type="password" id="login-password" placeholder="Digite a senha..." autocomplete="current-password" />
+      </div>
+      <button class="login-btn" id="login-btn">Entrar no Painel</button>
+      <p class="login-error" id="login-error">Senha incorreta. Tente novamente.</p>
+    </div>
+  </div>
+
+  <!-- ADMIN WRAP -->
+  <div class="admin-wrap" id="admin-wrap" style="display:none;">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🦷</div>
+        <div class="sidebar-logo-text">
+          <strong>Dentalmil</strong>
+          <span>Painel Administrativo</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" id="nav-produtos-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+          Gerenciar Ofertas
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="loja.html" class="sidebar-store-link" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+          Ver Loja Online
+        </a>
+        <a href="index.html" class="sidebar-store-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Voltar ao Site
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+      <!-- Topbar -->
+      <div class="admin-topbar">
+        <div>
+          <h1>Ofertas da Loja</h1>
+          <p>Cadastre, edite e gerencie os produtos exibidos na loja virtual.</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn-admin btn-ghost" id="export-btn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Exportar
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row" id="stats-row">
+        <div class="stat-card">
+          <div class="stat-card-label">Total de Ofertas</div>
+          <div class="stat-card-value" id="stat-total">0</div>
+          <div class="stat-card-sub">produtos cadastrados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Categorias</div>
+          <div class="stat-card-value" id="stat-cats">0</div>
+          <div class="stat-card-sub">categorias distintas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Com Foto</div>
+          <div class="stat-card-value" id="stat-photos">0</div>
+          <div class="stat-card-sub">produtos com imagem</div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <div class="admin-grid">
+
+        <!-- Product List -->
+        <div class="product-list-card">
+          <div class="card-header">
+            <h2>Lista de Ofertas</h2>
+            <span id="list-count">0 produtos</span>
+          </div>
+          <div class="product-list" id="product-list"></div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-card">
+          <div class="form-header">
+            <h2 id="form-title">Novo Produto</h2>
+            <span class="form-mode-badge" id="form-mode-badge">Cadastro</span>
+          </div>
+          <div class="form-body">
+            <input type="hidden" id="edit-id" />
+
+            <div class="form-group">
+              <label for="f-nome">Nome do Produto <span>*</span></label>
+              <input type="text" class="form-control" id="f-nome" placeholder="Ex: Luva de Procedimento M" maxlength="80" />
+            </div>
+
+            <div class="form-group">
+              <label for="f-categoria">Categoria <span>*</span></label>
+              <select class="form-control" id="f-categoria">
+                <option value="">Selecione uma categoria</option>
+                <option>Biossegurança</option>
+                <option>Resinas &amp; Restauração</option>
+                <option>Instrumental Cirúrgico</option>
+                <option>Kits Acadêmicos</option>
+                <option>Moldagem</option>
+                <option>Endodontia</option>
+                <option>Clareamento</option>
+                <option>Ortodontia</option>
+                <option>Periodontia</option>
+                <option>Outros</option>
+              </select>
+              <input type="text" class="form-control" id="f-categoria-custom" placeholder="Ou digite uma categoria personalizada..." style="margin-top:6px;display:none;" />
+            </div>
+
+            <div class="form-group">
+              <label for="f-subdesc">Subdescriação</label>
+              <input type="text" class="form-control" id="f-subdesc" placeholder="Ex: Caixa com 100 unidades – Látex" maxlength="120" />
+            </div>
+
+            <div class="form-group">
+              <label for="f-preco">Preço <span>*</span></label>
+              <input type="text" class="form-control" id="f-preco" placeholder="Ex: R$ 29,90" maxlength="30" />
+            </div>
+
+            <div class="form-group">
+              <label for="f-descricao">Descrição Completa</label>
+              <textarea class="form-control" id="f-descricao" rows="4" placeholder="Descreva o produto em detalhes: composição, indicações, marcas disponíveis, etc."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Foto do Produto</label>
+              <div class="img-upload-area" id="upload-area">
+                <input type="file" id="f-foto" accept="image/*" />
+                <div class="img-upload-icon">🖼️</div>
+                <p class="img-upload-text"><strong>Clique para selecionar</strong> ou arraste uma imagem</p>
+                <p class="img-upload-text" style="font-size:0.72rem;margin-top:4px;">JPG, PNG, WEBP – máx. 2MB</p>
+              </div>
+              <div class="img-preview" id="img-preview">
+                <img id="img-preview-img" src="" alt="Preview" />
+                <button class="img-preview-remove" id="remove-img-btn" title="Remover imagem">✕</button>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn-admin btn-ghost" id="clear-form-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                Limpar
+              </button>
+            </div>
+            <button class="form-submit" id="form-submit-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+              Salvar Produto
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-icon"></span>
+    <span class="toast-msg" id="toast-msg"></span>
+  </div>
+
+  <!-- Confirm Dialog -->
+  <div class="confirm-backdrop" id="confirm-backdrop">
+    <div class="confirm-box">
+      <div class="confirm-icon">🗑️</div>
+      <h3 class="confirm-title">Excluir Produto?</h3>
+      <p class="confirm-text" id="confirm-text">Tem certeza que deseja excluir este produto? Esta ação não pode ser desfeita.</p>
+      <div class="confirm-actions">
+        <button class="btn-admin btn-ghost" id="confirm-cancel-btn">Cancelar</button>
+        <button class="btn-admin btn-danger" id="confirm-ok-btn">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =============================================
+    // ADMIN PANEL – DENTALMIL OFERTAS
+    // =============================================
+    const STORAGE_KEY = 'dentalmil_produtos';
+    const ADMIN_PASS = 'dentalmil2024';
+
+    let products = [];
+    let currentFoto = null;
+    let deleteTargetId = null;
+    let editingId = null;
+
+    // ---- Utils ----
+    function uid() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+    function loadProducts() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+      catch(e) { return []; }
+    }
+    function saveProducts() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+    }
+
+    function showToast(msg, type) {
+      const t = document.getElementById('toast');
+      const m = document.getElementById('toast-msg');
+      t.className = 'toast ' + (type || 'success');
+      m.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 3200);
+    }
+
+    // ---- Login ----
+    document.getElementById('login-btn').addEventListener('click', doLogin);
+    document.getElementById('login-password').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') doLogin();
+    });
+    function doLogin() {
+      const pw = document.getElementById('login-password').value;
+      const err = document.getElementById('login-error');
+      if (pw === ADMIN_PASS) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-wrap').style.display = 'flex';
+        init();
+      } else {
+        err.style.display = 'block';
+        document.getElementById('login-password').value = '';
+        document.getElementById('login-password').focus();
+      }
+    }
+
+    // ---- Init ----
+    function init() {
+      products = loadProducts();
+      renderList();
+      updateStats();
+    }
+
+    // ---- Stats ----
+    function updateStats() {
+      document.getElementById('stat-total').textContent = products.length;
+      const cats = new Set(products.map(function(p) { return p.categoria || 'Geral'; }));
+      document.getElementById('stat-cats').textContent = cats.size;
+      document.getElementById('stat-photos').textContent = products.filter(function(p) { return !!p.foto; }).length;
+    }
+
+    // ---- Render List ----
+    function renderList() {
+      const list = document.getElementById('product-list');
+      document.getElementById('list-count').textContent = products.length + ' produto' + (products.length !== 1 ? 's' : '');
+      if (products.length === 0) {
+        list.innerHTML = '<div class="empty-list"><div class="empty-list-icon">📦</div><p>Nenhum produto cadastrado.<br>Use o formulário ao lado para começar.</p></div>';
+        return;
+      }
+      list.innerHTML = products.map(function(p) {
+        var thumb = p.foto
+          ? '<img src="' + p.foto + '" alt="' + p.nome + '" />'
+          : '🦷';
+        return '<div class="product-list-item" onclick="editProduct(\'' + p.id + '\')">'
+          + '<div class="product-thumb">' + thumb + '</div>'
+          + '<div class="product-list-info">'
+          + '<div class="product-list-name">' + p.nome + '</div>'
+          + '<div class="product-list-cat">' + (p.categoria || 'Geral') + '</div>'
+          + '</div>'
+          + '<div class="product-list-price">' + (p.preco || '—') + '</div>'
+          + '<div class="product-list-actions" onclick="event.stopPropagation()">'
+          + '<button class="icon-btn icon-btn-edit" onclick="editProduct(\'' + p.id + '\')" title="Editar">'
+          + '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>'
+          + '</button>'
+          + '<button class="icon-btn icon-btn-delete" onclick="confirmDelete(\'' + p.id + '\')" title="Excluir">'
+          + '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>'
+          + '</button>'
+          + '</div></div>';
+      }).join('');
+    }
+
+    // ---- Save Product ----
+    document.getElementById('form-submit-btn').addEventListener('click', function() {
+      var nome = document.getElementById('f-nome').value.trim();
+      var catSelect = document.getElementById('f-categoria').value;
+      var catCustom = document.getElementById('f-categoria-custom').value.trim();
+      var categoria = catSelect === '__custom__' ? catCustom : catSelect;
+      var subdescricao = document.getElementById('f-subdesc').value.trim();
+      var preco = document.getElementById('f-preco').value.trim();
+      var descricao = document.getElementById('f-descricao').value.trim();
+
+      if (!nome) { showToast('O nome do produto é obrigatório!', 'error'); document.getElementById('f-nome').focus(); return; }
+      if (!categoria) { showToast('Selecione ou digite uma categoria!', 'error'); return; }
+      if (!preco) { showToast('O preço é obrigatório!', 'error'); document.getElementById('f-preco').focus(); return; }
+
+      if (editingId) {
+        var idx = products.findIndex(function(p) { return p.id === editingId; });
+        if (idx > -1) {
+          products[idx].nome = nome;
+          products[idx].categoria = categoria;
+          products[idx].subdescricao = subdescricao;
+          products[idx].preco = preco;
+          products[idx].descricao = descricao;
+          if (currentFoto !== null) products[idx].foto = currentFoto;
+          products[idx].updatedAt = new Date().toISOString();
+        }
+        showToast('Produto atualizado com sucesso!', 'success');
+      } else {
+        var newP = {
+          id: uid(), nome: nome, categoria: categoria,
+          subdescricao: subdescricao, preco: preco, descricao: descricao,
+          foto: currentFoto || null,
+          createdAt: new Date().toISOString()
+        };
+        products.unshift(newP);
+        showToast('Produto cadastrado com sucesso!', 'success');
+      }
+
+      saveProducts();
+      renderList();
+      updateStats();
+      clearForm();
+    });
+
+    // ---- Edit Product ----
+    function editProduct(id) {
+      var p = products.find(function(x) { return x.id === id; });
+      if (!p) return;
+      editingId = id;
+      document.getElementById('f-nome').value = p.nome;
+      document.getElementById('f-subdesc').value = p.subdescricao || '';
+      document.getElementById('f-preco').value = p.preco || '';
+      document.getElementById('f-descricao').value = p.descricao || '';
+
+      var catSelect = document.getElementById('f-categoria');
+      var found = false;
+      for (var i = 0; i < catSelect.options.length; i++) {
+        if (catSelect.options[i].value === p.categoria) { catSelect.value = p.categoria; found = true; break; }
+      }
+      if (!found) {
+        catSelect.value = '__custom__';
+        document.getElementById('f-categoria-custom').style.display = 'block';
+        document.getElementById('f-categoria-custom').value = p.categoria || '';
+      } else {
+        document.getElementById('f-categoria-custom').style.display = 'none';
+      }
+
+      if (p.foto) {
+        currentFoto = p.foto;
+        document.getElementById('img-preview-img').src = p.foto;
+        document.getElementById('img-preview').style.display = 'block';
+      } else {
+        currentFoto = null;
+        document.getElementById('img-preview').style.display = 'none';
+      }
+
+      document.getElementById('form-title').textContent = 'Editar Produto';
+      document.getElementById('form-mode-badge').textContent = 'Edição';
+      document.getElementById('form-mode-badge').className = 'form-mode-badge edit';
+      document.getElementById('form-submit-btn').textContent = '';
+      document.getElementById('form-submit-btn').className = 'form-submit update';
+      document.getElementById('form-submit-btn').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>Atualizar Produto';
+
+      document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ---- Clear Form ----
+    document.getElementById('clear-form-btn').addEventListener('click', clearForm);
+    function clearForm() {
+      editingId = null; currentFoto = null;
+      document.getElementById('f-nome').value = '';
+      document.getElementById('f-categoria').value = '';
+      document.getElementById('f-categoria-custom').value = '';
+      document.getElementById('f-categoria-custom').style.display = 'none';
+      document.getElementById('f-subdesc').value = '';
+      document.getElementById('f-preco').value = '';
+      document.getElementById('f-descricao').value = '';
+      document.getElementById('f-foto').value = '';
+      document.getElementById('img-preview').style.display = 'none';
+      document.getElementById('img-preview-img').src = '';
+      document.getElementById('form-title').textContent = 'Novo Produto';
+      document.getElementById('form-mode-badge').textContent = 'Cadastro';
+      document.getElementById('form-mode-badge').className = 'form-mode-badge';
+      document.getElementById('form-submit-btn').className = 'form-submit';
+      document.getElementById('form-submit-btn').innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>Salvar Produto';
+    }
+
+    // ---- Category custom ----
+    document.getElementById('f-categoria').addEventListener('change', function() {
+      var custom = document.getElementById('f-categoria-custom');
+      if (this.value === '__custom__') {
+        custom.style.display = 'block';
+        custom.focus();
+      } else {
+        custom.style.display = 'none';
+      }
+    });
+    // add custom option
+    var customOpt = document.createElement('option');
+    customOpt.value = '__custom__';
+    customOpt.textContent = '+ Nova categoria personalizada';
+    document.getElementById('f-categoria').appendChild(customOpt);
+
+    // ---- Image Upload ----
+    var uploadArea = document.getElementById('upload-area');
+    var fileInput = document.getElementById('f-foto');
+
+    uploadArea.addEventListener('click', function() { fileInput.click(); });
+    uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); uploadArea.style.borderColor = 'var(--blue)'; });
+    uploadArea.addEventListener('dragleave', function() { uploadArea.style.borderColor = 'var(--border)'; });
+    uploadArea.addEventListener('drop', function(e) {
+      e.preventDefault(); uploadArea.style.borderColor = 'var(--border)';
+      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', function() {
+      if (this.files[0]) handleFile(this.files[0]);
+    });
+
+    function handleFile(file) {
+      if (file.size > 2 * 1024 * 1024) { showToast('Imagem muito grande! Máx. 2MB.', 'error'); return; }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        currentFoto = e.target.result;
+        document.getElementById('img-preview-img').src = currentFoto;
+        document.getElementById('img-preview').style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.getElementById('remove-img-btn').addEventListener('click', function() {
+      currentFoto = null;
+      document.getElementById('img-preview').style.display = 'none';
+      document.getElementById('img-preview-img').src = '';
+      fileInput.value = '';
+    });
+
+    // ---- Delete ----
+    function confirmDelete(id) {
+      var p = products.find(function(x) { return x.id === id; });
+      deleteTargetId = id;
+      document.getElementById('confirm-text').textContent = 'Tem certeza que deseja excluir "' + (p ? p.nome : 'este produto') + '"? Esta ação não pode ser desfeita.';
+      document.getElementById('confirm-backdrop').classList.add('open');
+    }
+    document.getElementById('confirm-cancel-btn').addEventListener('click', function() {
+      document.getElementById('confirm-backdrop').classList.remove('open');
+      deleteTargetId = null;
+    });
+    document.getElementById('confirm-ok-btn').addEventListener('click', function() {
+      if (!deleteTargetId) return;
+      products = products.filter(function(p) { return p.id !== deleteTargetId; });
+      saveProducts(); renderList(); updateStats();
+      showToast('Produto excluído.', 'success');
+      document.getElementById('confirm-backdrop').classList.remove('open');
+      deleteTargetId = null;
+      if (editingId) clearForm();
+    });
+
+    // ---- Export ----
+    document.getElementById('export-btn').addEventListener('click', function() {
+      var data = JSON.stringify(products, null, 2);
+      var blob = new Blob([data], { type: 'application/json' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'dentalmil_ofertas.json';
+      document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+      showToast('Exportação concluída!', 'success');
+    });
+  </script>
+</body>
+</html>

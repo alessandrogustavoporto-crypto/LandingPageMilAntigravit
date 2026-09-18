@@ -160,6 +160,27 @@ ul { list-style: none; }
 }
 .nav-link:hover { color: var(--blue); background: rgba(0,102,204,0.06); }
 
+/* Ofertas da Loja highlight */
+.nav-link-offers {
+  color: var(--green-dark) !important;
+  background: rgba(35,154,0,0.08);
+  border: 1px solid rgba(35,154,0,0.2);
+  font-weight: 600 !important;
+  position: relative;
+}
+.nav-link-offers:hover {
+  background: rgba(35,154,0,0.16) !important;
+  color: var(--green-dark) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(35,154,0,0.18);
+}
+.mobile-nav-link-offers {
+  color: var(--green-dark) !important;
+  background: rgba(35,154,0,0.08);
+  font-weight: 600 !important;
+  border-left: 3px solid var(--green);
+}
+
 /* Header CTA */
 .header-cta { font-size: 0.85rem; padding: 10px 20px; }
 .header-cta svg { width: 16px; height: 16px; }
