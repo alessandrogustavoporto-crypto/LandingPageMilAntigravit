@@ -165,7 +165,8 @@
     .store-card-img-wrap img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      padding: 20px;
       transition: transform 0.5s ease;
     }
     .store-card:hover .store-card-img-wrap img { transform: scale(1.03); }
@@ -327,8 +328,9 @@
       position: relative; height: 320px;
       background: var(--gray-bg);
       border-radius: var(--radius-xl) var(--radius-xl) 0 0; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
-    .modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-img-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 24px; }
     .modal-no-img {
       width: 100%; height: 100%;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
