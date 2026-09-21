@@ -829,11 +829,10 @@ ul { list-style: none; }
   .hero-visual { order: -1; }
   .hero-image { height: 260px; }
   .hero-image-wrapper { overflow: visible; }
-  .hero-image-badge { left: 0; top: 10px; padding: 4px 8px; gap: 4px; transform: scale(0.65); transform-origin: top left; }
-  .hero-image-badge svg { width: 16px; height: 16px; }
-  .hero-image-badge div strong { font-size: 0.7rem; }
-  .hero-image-badge div span { display: none; }
-  .hero-image-badge--bottom { right: 0; bottom: 10px; left: auto; padding: 4px 8px; transform: scale(0.65); transform-origin: bottom right; }
+  .hero-image-badge { left: 8px; top: 12px; width: 36px; height: 36px; padding: 0; justify-content: center; border-radius: 8px; transform: none !important; }
+  .hero-image-badge div { display: none; }
+  .hero-image-badge svg { width: 20px; height: 20px; margin: 0; }
+  .hero-image-badge--bottom { right: 8px; bottom: 12px; left: auto; }
   .hero-stats { gap: 12px; padding: 14px 16px; width: 100%; }
   .hero-ctas { flex-direction: column; }
   .hero-ctas .btn { justify-content: center; width: 100%; }
