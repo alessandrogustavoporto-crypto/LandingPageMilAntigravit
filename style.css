@@ -829,9 +829,9 @@ ul { list-style: none; }
   .hero-visual { order: -1; }
   .hero-image { height: 260px; }
   .hero-image-wrapper { overflow: visible; }
-  .hero-image-badge { left: 4px; top: 12px; padding: 6px 10px; gap: 6px; width: auto; height: auto; transform: scale(0.75) !important; transform-origin: top left !important; justify-content: flex-start; }
-  .hero-image-badge div { display: block; }
-  .hero-image-badge div strong { font-size: 0.75rem; }
+  .hero-image-badge { left: 4px; top: 12px; padding: 6px 10px; gap: 6px; width: auto; max-width: 48%; height: auto; transform: scale(0.75) !important; transform-origin: top left !important; justify-content: flex-start; }
+  .hero-image-badge div { display: block; overflow-wrap: break-word; }
+  .hero-image-badge div strong { font-size: 0.75rem; display: block; }
   .hero-image-badge div span { display: block; font-size: 0.65rem; }
   .hero-image-badge svg { width: 16px; height: 16px; }
   .hero-image-badge--bottom { right: 4px; bottom: 12px; left: auto; transform-origin: bottom right !important; }
