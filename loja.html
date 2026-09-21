@@ -221,22 +221,22 @@
     .store-card-name { font-size: 0.9rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; line-height: 1.3; }
     .store-card-subdesc { font-size: 0.75rem; color: var(--text-mid); margin-bottom: 10px; line-height: 1.5; flex: 1; }
     .store-card-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; align-items: stretch;
+      gap: 10px; margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
     }
-    .store-card-price { font-size: 1.15rem; font-weight: 800; color: var(--green-dark); }
+    .store-card-price { font-size: 1.15rem; font-weight: 800; color: var(--green-dark); display: flex; flex-direction: column; }
     .store-card-price small { font-size: 0.7rem; color: var(--text-mid); font-weight: 400; display: block; margin-bottom: 2px; }
     .store-card-actions { display: flex; gap: 8px; }
     .card-btn-detail {
+      flex: 1; text-align: center;
       padding: 8px 14px; background: var(--blue); color: #fff; border: none;
-      border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 0.8rem;
-      font-weight: 600; cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
+      border-radius: 6px; font-size: 0.75rem; font-weight: 600; cursor: pointer; text-decoration: none;
     }
     .card-btn-detail:hover { background: var(--blue-dark); transform: translateY(-1px); }
     .card-btn-wpp {
-      padding: 8px; background: var(--green); color: #fff; border: none;
-      border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
-      display: flex; align-items: center; justify-content: center; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+      width: 36px; height: 36px; background: var(--green); color: #fff;
+      border-radius: 6px; text-decoration: none; transition: background 0.2s;
     }
     .card-btn-wpp:hover { background: var(--green-dark); transform: translateY(-1px); }
     .card-btn-wpp svg { width: 18px; height: 18px; }
