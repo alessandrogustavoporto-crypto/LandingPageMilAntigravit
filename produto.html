@@ -1,0 +1,248 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produto – Dentalmil | Materiais Odontologicos em Salvador</title>
+  <meta name="description" content="Confira os detalhes deste produto na Dentalmil, sua distribuidora odontologica em Salvador - BA." />
+  <meta property="og:type" content="product" />
+  <meta property="og:site_name" content="Dentalmil" />
+  <meta id="og-title" property="og:title" content="Produto - Dentalmil" />
+  <meta id="og-description" property="og:description" content="Materiais odontologicos de qualidade na Dentalmil." />
+  <meta id="og-image" property="og:image" content="" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Poppins',sans-serif;background:#F7F8FA;color:#1A202C}
+    .breadcrumb-bar{background:#fff;border-bottom:1px solid var(--border);padding:12px 0;font-size:.8rem;color:var(--text-mid)}
+    .breadcrumb-bar a{color:var(--blue);text-decoration:none}
+    .breadcrumb-bar a:hover{text-decoration:underline}
+    .breadcrumb-bar span{margin:0 6px;opacity:.5}
+    .page-state{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:60px 24px}
+    .page-state-icon{font-size:3.5rem}
+    .page-state h2{font-size:1.4rem;font-weight:700;color:var(--text-dark)}
+    .page-state p{color:var(--text-mid);font-size:.95rem;max-width:400px}
+    .spinner{width:48px;height:48px;border:4px solid var(--border);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .product-page{padding:48px 0 80px;display:none}
+    .product-inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+    .product-img-col{position:sticky;top:100px}
+    .product-img-main{background:#fff;border-radius:20px;border:1px solid var(--border);overflow:hidden;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(0,0,0,.07)}
+    .product-img-main img{width:100%;height:100%;object-fit:contain;padding:24px}
+    .product-no-img{font-size:5rem;display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-mid)}
+    .product-no-img span{font-size:.9rem}
+    .product-badge-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .product-oferta-badge{background:linear-gradient(135deg,#FF6B35,#FF4500);color:#fff;font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:50px;text-transform:uppercase;letter-spacing:.06em}
+    .product-category{font-size:.8rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}
+    .product-name{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--text-dark);line-height:1.2;margin-bottom:16px}
+    .product-subdesc{font-size:.95rem;color:var(--text-mid);line-height:1.7;margin-bottom:24px}
+    .product-price-box{background:linear-gradient(135deg,#F0FFF4 0%,#E6F4FF 100%);border:1px solid rgba(35,154,0,.2);border-radius:16px;padding:24px 28px;margin-bottom:24px}
+    .product-price-label{font-size:.8rem;color:var(--text-mid);font-weight:500;margin-bottom:4px}
+    .product-price-value{font-size:2.4rem;font-weight:900;color:var(--green-dark);line-height:1;margin-bottom:10px}
+    .product-price-note{font-size:.8rem;color:var(--text-mid);display:flex;align-items:center;gap:6px}
+    .product-actions{display:flex;flex-direction:column;gap:12px;margin-bottom:28px}
+    .btn-wpp-full{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;padding:16px 24px;border-radius:12px;font-size:1rem;font-weight:700;text-decoration:none;transition:background .2s,transform .2s}
+    .btn-wpp-full:hover{background:#1EB85A;transform:translateY(-2px)}
+    .btn-phone-full{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:var(--text-dark);padding:14px 24px;border-radius:12px;font-size:.95rem;font-weight:600;text-decoration:none;border:1.5px solid var(--border);transition:border-color .2s,color .2s}
+    .btn-phone-full:hover{border-color:var(--blue);color:var(--blue)}
+    .product-share{display:flex;align-items:center;gap:10px;padding-top:20px;border-top:1px solid var(--border);font-size:.82rem;color:var(--text-mid)}
+    .share-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--text-dark);transition:all .2s;font-family:'Poppins',sans-serif}
+    .share-btn:hover{border-color:var(--blue);color:var(--blue)}
+    .share-btn--copied{border-color:var(--green)!important;color:var(--green)!important}
+    .product-desc-section{background:#fff;border-radius:20px;border:1px solid var(--border);padding:32px;margin-top:48px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+    .product-desc-title{font-size:1.1rem;font-weight:700;color:var(--text-dark);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+    .product-desc-title::after{content:'';flex:1;height:1px;background:var(--border)}
+    .product-desc-text{font-size:.95rem;color:var(--text-mid);line-height:1.8;white-space:pre-wrap}
+    .back-to-store{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-size:.88rem;font-weight:600;text-decoration:none;margin-bottom:24px;transition:gap .2s}
+    .back-to-store:hover{gap:10px}
+    @media(max-width:768px){.product-inner{grid-template-columns:1fr;gap:32px}.product-img-col{position:static}.product-img-main{max-width:360px;margin:0 auto}.product-page{padding:24px 0 60px}.product-price-value{font-size:2rem}}
+    @media(max-width:480px){.product-price-box{padding:18px 20px}.product-price-value{font-size:1.7rem}}
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo-link" aria-label="Dentalmil">
+        <img src="images/logo_dentalmil.png" alt="Dentalmil" class="logo-img" />
+      </a>
+      <nav class="nav" id="main-nav">
+        <a href="index.html#clinicas" class="nav-link">Clinicas</a>
+        <a href="index.html#academico" class="nav-link">Estudantes</a>
+        <a href="index.html#produtos" class="nav-link">Produtos</a>
+        <a href="loja.html" class="nav-link nav-link--active">Ofertas da Loja</a>
+        <a href="index.html#contato" class="nav-link">Contato</a>
+      </nav>
+      <div class="header-actions">
+        <a href="tel:+557130174144" class="header-phone">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          (71) 3017-4144
+        </a>
+        <a href="https://wa.me/5571992194601" target="_blank" rel="noopener" class="btn btn-whatsapp header-cta">
+          <svg class="icon-whatsapp" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Fale Conosco
+        </a>
+        <button class="hamburger" id="hamburger-btn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="index.html#clinicas" class="mobile-nav-link">Clinicas</a>
+      <a href="index.html#academico" class="mobile-nav-link">Estudantes</a>
+      <a href="index.html#produtos" class="mobile-nav-link">Produtos</a>
+      <a href="loja.html" class="mobile-nav-link">Ofertas da Loja</a>
+      <a href="index.html#contato" class="mobile-nav-link">Contato</a>
+    </div>
+  </header>
+
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <a href="index.html">Inicio</a><span>&#8250;</span>
+      <a href="loja.html">Ofertas da Loja</a><span>&#8250;</span>
+      <span id="breadcrumb-name">Produto</span>
+    </div>
+  </div>
+
+  <div class="page-state" id="state-loading">
+    <div class="spinner"></div>
+    <p>Carregando produto...</p>
+  </div>
+  <div class="page-state" id="state-error" style="display:none">
+    <div class="page-state-icon">&#x1F615;</div>
+    <h2>Produto nao encontrado</h2>
+    <p>Este produto pode ter sido removido ou o link esta incorreto.</p>
+    <a href="loja.html" class="btn btn-primary" style="margin-top:8px">Ver todas as ofertas</a>
+  </div>
+
+  <div class="product-page" id="product-page">
+    <div class="container">
+      <a href="loja.html" class="back-to-store">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Voltar as Ofertas
+      </a>
+      <div class="product-inner">
+        <div class="product-img-col">
+          <div class="product-img-main" id="product-img-wrap">
+            <div class="product-no-img" id="product-no-img">&#x1F9B7;<span>Sem imagem</span></div>
+            <img id="product-img" src="" alt="" style="display:none" />
+          </div>
+        </div>
+        <div class="product-info-col">
+          <div class="product-badge-row">
+            <span class="product-oferta-badge">Oferta Especial</span>
+            <span class="product-category" id="product-category"></span>
+          </div>
+          <h1 class="product-name" id="product-name">Carregando...</h1>
+          <p class="product-subdesc" id="product-subdesc"></p>
+          <div class="product-price-box">
+            <div class="product-price-label">A partir de</div>
+            <div class="product-price-value" id="product-price">-</div>
+            <div class="product-price-note">&#x1F4AC; Condicoes especiais de pagamento e descontos para volume via WhatsApp.</div>
+          </div>
+          <div class="product-actions">
+            <a class="btn-wpp-full" id="product-wpp-btn" href="#" target="_blank" rel="noopener noreferrer">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Solicitar pelo WhatsApp
+            </a>
+            <a class="btn-phone-full" href="tel:+557130174144">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              Ligar: (71) 3017-4144
+            </a>
+          </div>
+          <div class="product-share">
+            <span>Compartilhar:</span>
+            <button class="share-btn" id="share-btn" onclick="copyLink()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+              Copiar link
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="product-desc-section" id="product-desc-section" style="display:none">
+        <div class="product-desc-title">Descricao completa</div>
+        <p class="product-desc-text" id="product-desc"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <img src="images/logo_dentalmil.png" alt="Dentalmil" class="footer-logo-img" />
+        <p class="footer-brand-desc">Sua parceira de confianca em materiais odontologicos em Salvador - BA.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&#169; 2024 Dentalmil - Distribuidora de Materiais Odontologicos. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5571992194601" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <div class="whatsapp-float-pulse"></div><div class="whatsapp-float-pulse-2"></div>
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL='https://gjjmnwdpwuxkwcecykjo.supabase.co';
+    const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdqam1ud2Rwd3V4a3djZWN5a2pvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk3MzMwMjQsImV4cCI6MjEwNTMwOTAyNH0.c66EfaMPgkPuNzmuzEVWeN6xL2Jgj88NBAb525zMDbc';
+    const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+    const WPP_NUMBER='5571992194601';
+    function wppLink(name){
+      var msg=encodeURIComponent('Ola! Vim pela loja online da Dentalmil e tenho interesse no produto: *'+name+'*. Gostaria de mais informacoes e cotacao.');
+      return 'https://wa.me/'+WPP_NUMBER+'?text='+msg;
+    }
+    function copyLink(){
+      navigator.clipboard.writeText(window.location.href).then(function(){
+        var btn=document.getElementById('share-btn');
+        btn.textContent='Copiado!';
+        btn.classList.add('share-btn--copied');
+        setTimeout(function(){btn.textContent='Copiar link';btn.classList.remove('share-btn--copied');},2000);
+      });
+    }
+    async function loadProduct(){
+      var params=new URLSearchParams(window.location.search);
+      var id=params.get('id');
+      if(!id){showError();return;}
+      var res=await sb.from('produtos').select('*').eq('id',id).single();
+      if(res.error||!res.data){showError();return;}
+      var p=res.data;
+      document.title=p.nome+' - Dentalmil | Materiais Odontologicos';
+      document.querySelector('meta[name="description"]').content=(p.subdescricao||p.descricao||'Produto odontologico na Dentalmil, Salvador - BA.').slice(0,160);
+      document.getElementById('og-title').content=p.nome+' - Dentalmil';
+      document.getElementById('og-description').content=p.subdescricao||'';
+      if(p.foto)document.getElementById('og-image').content=p.foto;
+      document.getElementById('breadcrumb-name').textContent=p.nome;
+      if(p.foto){
+        var img=document.getElementById('product-img');
+        img.src=p.foto;img.alt=p.nome;
+        img.style.display='block';
+        document.getElementById('product-no-img').style.display='none';
+      }
+      document.getElementById('product-category').textContent=p.categoria||'Geral';
+      document.getElementById('product-name').textContent=p.nome;
+      document.getElementById('product-subdesc').textContent=p.subdescricao||'';
+      document.getElementById('product-price').textContent=p.preco||'Consulte';
+      document.getElementById('product-wpp-btn').href=wppLink(p.nome);
+      if(p.descricao&&p.descricao.trim()){
+        document.getElementById('product-desc').textContent=p.descricao;
+        document.getElementById('product-desc-section').style.display='block';
+      }
+      document.getElementById('state-loading').style.display='none';
+      document.getElementById('product-page').style.display='block';
+    }
+    function showError(){
+      document.getElementById('state-loading').style.display='none';
+      document.getElementById('state-error').style.display='flex';
+    }
+    document.getElementById('hamburger-btn').addEventListener('click',function(){
+      document.getElementById('mobile-nav').classList.toggle('open');
+      this.classList.toggle('active');
+    });
+    loadProduct();
+  </script>
+</body>
+</html>

@@ -596,10 +596,29 @@
     }
 
     function createCard(p) {
+      var detailUrl = 'produto.html?id=' + p.id;
       const imgHtml = p.foto
         ? '<img src="' + p.foto + '" alt="' + p.nome + '" loading="lazy" />'
-        : '<div class="store-no-img">🦷<span>Sem imagem</span></div>';
-      return '<article class="store-card" data-id="' + p.id + '" onclick="openModal(\'' + p.id + '\')">'
+        : '<div class="store-no-img">&#x1F9B7;<span>Sem imagem</span></div>';
+      return '<article class="store-card" data-id="' + p.id + '" onclick="window.location.href=\'' + detailUrl + '\'" style="cursor:pointer">'
+        + '<div class="store-card-img-wrap">'
+        + imgHtml
+        + '<div class="store-card-badge">Oferta</div>'
+        + '<div class="store-card-overlay">'
+        + '<a class="overlay-btn overlay-btn-detail" href="' + detailUrl + '" onclick="event.stopPropagation()">Ver Detalhes</a>'
+        + '<a class="overlay-btn overlay-btn-wpp" href="' + wppLink(p.nome) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">WhatsApp</a>'
+        + '</div></div>'
+        + '<div class="store-card-body">'
+        + '<div class="store-card-category">' + (p.categoria || 'Geral') + '</div>'
+        + '<h3 class="store-card-name">' + p.nome + '</h3>'
+        + '<p class="store-card-subdesc">' + (p.subdescricao || '') + '</p>'
+        + '<div class="store-card-footer">'
+        + '<div class="store-card-price"><small>a partir de</small>' + (p.preco || 'Consulte') + '</div>'
+        + '<div class="store-card-actions">'
+        + '<a class="card-btn-detail" href="' + detailUrl + '" onclick="event.stopPropagation()">Detalhes</a>'
+        + '<a class="card-btn-wpp" href="' + wppLink(p.nome) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="WhatsApp">' + wppIcon() + '</a>'
+        + '</div></div></div></article>';
+    }
         + '<div class="store-card-img-wrap">'
         + imgHtml
         + '<div class="store-card-badge">Oferta</div>'
@@ -665,35 +684,6 @@
       countEl.innerHTML = '<strong>' + filtered.length + '</strong> oferta' + (filtered.length !== 1 ? 's' : '') + (activeFilter !== 'todos' ? ' em <strong>' + activeFilter + '</strong>' : ' disponíveis');
     }
 
-    function openModal(id) {
-      const p = allProducts.find(x => x.id === id);
-      if (!p) return;
-      const imgEl = document.getElementById('modal-img');
-      const noImgEl = document.getElementById('modal-no-img');
-      if (p.foto) {
-        imgEl.src = p.foto; imgEl.alt = p.nome;
-        imgEl.style.display = 'block'; noImgEl.style.display = 'none';
-      } else {
-        imgEl.style.display = 'none'; noImgEl.style.display = 'flex';
-      }
-      document.getElementById('modal-category').textContent = p.categoria || 'Geral';
-      document.getElementById('modal-product-name').textContent = p.nome;
-      document.getElementById('modal-subdesc').textContent = p.subdescricao || '';
-      document.getElementById('modal-price').textContent = p.preco || 'Consulte';
-      document.getElementById('modal-desc').textContent = p.descricao || 'Descrição não informada.';
-      document.getElementById('modal-wpp-btn').href = wppLink(p.nome);
-      document.getElementById('product-modal').classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('product-modal').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-    document.getElementById('product-modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
     document.getElementById('filter-todos').addEventListener('click', function() { setFilter('todos'); });
 
     var hamburger = document.getElementById('hamburger-btn');
