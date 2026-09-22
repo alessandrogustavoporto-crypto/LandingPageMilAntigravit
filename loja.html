@@ -619,24 +619,8 @@
         + '<a class="card-btn-wpp" href="' + wppLink(p.nome) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="WhatsApp">' + wppIcon() + '</a>'
         + '</div></div></div></article>';
     }
-        + '<div class="store-card-img-wrap">'
-        + imgHtml
-        + '<div class="store-card-badge">Oferta</div>'
-        + '<div class="store-card-overlay">'
-        + '<button class="overlay-btn overlay-btn-detail" onclick="event.stopPropagation();openModal(\'' + p.id + '\')">Ver Detalhes</button>'
-        + '<a class="overlay-btn overlay-btn-wpp" href="' + wppLink(p.nome) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">WhatsApp</a>'
-        + '</div></div>'
-        + '<div class="store-card-body">'
-        + '<div class="store-card-category">' + (p.categoria || 'Geral') + '</div>'
-        + '<h3 class="store-card-name">' + p.nome + '</h3>'
-        + '<p class="store-card-subdesc">' + (p.subdescricao || '') + '</p>'
-        + '<div class="store-card-footer">'
-        + '<div class="store-card-price"><small>a partir de</small>' + (p.preco || 'Consulte') + '</div>'
-        + '<div class="store-card-actions">'
-        + '<button class="card-btn-detail" onclick="event.stopPropagation();openModal(\'' + p.id + '\')">Detalhes</button>'
-        + '<a class="card-btn-wpp" href="' + wppLink(p.nome) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="WhatsApp">' + wppIcon() + '</a>'
-        + '</div></div></div></article>';
-    }
+
+
 
     function buildFilters(products) {
       const cats = [...new Set(products.map(p => p.categoria || 'Geral'))];
