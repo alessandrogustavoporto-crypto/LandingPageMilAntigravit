@@ -272,6 +272,37 @@
     }
     .store-empty-link:hover { background: var(--green-dark); transform: translateY(-2px); }
 
+    /* Paginação */
+    #pagination-container {
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 0;
+    }
+    .pg-btn {
+      min-width: 38px; height: 38px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1.5px solid #D1D5DB;
+      border-radius: 8px;
+      background: #fff;
+      color: #374151;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      padding: 0 8px;
+    }
+    .pg-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); background: #EBF5FF; }
+    .pg-btn.pg-active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .pg-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+    .pg-btn.pg-arrow { border-radius: 8px; }
+    .pg-dots { color: #9CA3AF; font-size: 1rem; padding: 0 2px; line-height: 38px; }
+    @media (max-width: 480px) {
+      .pg-btn { min-width: 32px; height: 32px; font-size: 0.8rem; }
+    }
+
+
     /* Skeleton cards */
     .skeleton-card {
       background: #fff;
@@ -512,6 +543,8 @@
           Preços válidos para reserva do produto clicando no ícone do WhatsApp.
         </p>
       </div>
+      <!-- Paginação -->
+      <div id="pagination-container" style="display:none;margin-top:32px;"></div>
     </div>
   </main>
 
@@ -671,25 +704,86 @@
       renderGrid();
     }
 
+    var currentPage = 1;
+    var PAGE_SIZE = 25;
+
     function renderGrid() {
-      const grid = document.getElementById('store-grid');
-      const countEl = document.getElementById('results-count');
-      const filtered = activeFilter === 'todos'
+      var grid = document.getElementById('store-grid');
+      var countEl = document.getElementById('results-count');
+      var filtered = activeFilter === 'todos'
         ? allProducts
-        : allProducts.filter(p => (p.categoria || 'Geral') === activeFilter);
+        : allProducts.filter(function(p) { return (p.categoria || 'Geral') === activeFilter; });
 
       if (allProducts.length === 0) {
         grid.innerHTML = '<div class="store-empty"><div class="store-empty-icon">🏷️</div><h3>Nenhuma oferta cadastrada ainda</h3><p>Os produtos serão exibidos aqui assim que forem adicionados pelo administrador.</p><a class="store-empty-link" href="https://wa.me/' + WPP_NUMBER + '?text=Ol%C3%A1!%20Gostaria%20de%20uma%20cota%C3%A7%C3%A3o." target="_blank">Solicitar cotação pelo WhatsApp</a></div>';
         countEl.innerHTML = 'Nenhuma oferta disponível no momento.';
+        document.getElementById('pagination-container').style.display = 'none';
         return;
       }
       if (filtered.length === 0) {
         grid.innerHTML = '<div class="store-empty"><div class="store-empty-icon">🔍</div><h3>Nenhum produto nessa categoria</h3><p>Tente outro filtro.</p></div>';
         countEl.innerHTML = 'Nenhum produto em <strong>' + activeFilter + '</strong>';
+        document.getElementById('pagination-container').style.display = 'none';
         return;
       }
-      grid.innerHTML = filtered.map(createCard).join('');
-      countEl.innerHTML = '<strong>' + filtered.length + '</strong> oferta' + (filtered.length !== 1 ? 's' : '') + (activeFilter !== 'todos' ? ' em <strong>' + activeFilter + '</strong>' : ' disponíveis');
+
+      var totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+      if (currentPage > totalPages) currentPage = 1;
+
+      var start = (currentPage - 1) * PAGE_SIZE;
+      var pageItems = filtered.slice(start, start + PAGE_SIZE);
+
+      grid.innerHTML = pageItems.map(createCard).join('');
+      countEl.innerHTML = '<strong>' + filtered.length + '</strong> oferta' + (filtered.length !== 1 ? 's' : '') + (activeFilter !== 'todos' ? ' em <strong>' + activeFilter + '</strong>' : ' disponíveis') + ' &nbsp;|&nbsp; Página <strong>' + currentPage + '</strong> de <strong>' + totalPages + '</strong>';
+
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages) {
+      var container = document.getElementById('pagination-container');
+      if (totalPages <= 1) {
+        container.style.display = 'none';
+        container.innerHTML = '';
+        return;
+      }
+      container.style.display = 'flex';
+
+      var pages = [];
+      // Always show first, last, current ±2
+      var shown = new Set();
+      [1, totalPages].forEach(function(p) { shown.add(p); });
+      for (var i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) { shown.add(i); }
+      var sorted = Array.from(shown).sort(function(a,b){return a-b;});
+
+      var html = '';
+      // Prev button
+      html += '<button class="pg-btn pg-arrow" ' + (currentPage === 1 ? 'disabled' : '') + ' onclick="goPage(' + (currentPage - 1) + ')">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6z"/></svg>' +
+        '</button>';
+
+      var prev = null;
+      sorted.forEach(function(p) {
+        if (prev !== null && p - prev > 1) {
+          html += '<span class="pg-dots">…</span>';
+        }
+        html += '<button class="pg-btn' + (p === currentPage ? ' pg-active' : '') + '" onclick="goPage(' + p + ')">' + p + '</button>';
+        prev = p;
+      });
+
+      // Next button
+      html += '<button class="pg-btn pg-arrow" ' + (currentPage === totalPages ? 'disabled' : '') + ' onclick="goPage(' + (currentPage + 1) + ')">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>' +
+        '</button>';
+
+      container.innerHTML = html;
+    }
+
+    function goPage(page) {
+      currentPage = page;
+      renderGrid();
+      // Scroll suave até o topo da grade
+      var storeMain = document.getElementById('store-grid');
+      if (storeMain) { storeMain.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     }
 
     document.getElementById('filter-todos').addEventListener('click', function() { setFilter('todos'); });
