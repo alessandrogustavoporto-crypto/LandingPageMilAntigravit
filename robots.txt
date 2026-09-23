@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Bloquear área administrativa
+Disallow: /admin-loja.html
+
+# Sitemap
+Sitemap: https://www.dentalmil.com.br/sitemap.xml
