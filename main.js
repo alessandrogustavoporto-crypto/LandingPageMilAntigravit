@@ -191,17 +191,19 @@ steps.forEach(step => {
 
 // ===== SHOW FLOAT BUTTON AFTER SCROLL =====
 const floatBtn = document.getElementById('whatsapp-float-btn');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    floatBtn.style.opacity = '1';
-    floatBtn.style.transform = 'scale(1)';
-  } else {
-    floatBtn.style.opacity = '0';
-    floatBtn.style.transform = 'scale(0.8)';
-  }
-}, { passive: true });
+if (floatBtn) {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      floatBtn.style.opacity = '1';
+      floatBtn.style.transform = 'scale(1)';
+    } else {
+      floatBtn.style.opacity = '0';
+      floatBtn.style.transform = 'scale(0.8)';
+    }
+  }, { passive: true });
 
-// Initial state
-floatBtn.style.opacity = '0';
-floatBtn.style.transform = 'scale(0.8)';
-floatBtn.style.transition = 'all 0.3s ease';
+  // Initial state
+  floatBtn.style.opacity = '0';
+  floatBtn.style.transform = 'scale(0.8)';
+  floatBtn.style.transition = 'all 0.3s ease';
+}
