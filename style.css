@@ -966,7 +966,7 @@ ul { list-style: none; }
 .proximity-badge strong { color: var(--green); }
 
 @media (max-width: 768px) {
-  .header-phone { display: none; }
+  .header-phone, .header-phone-wrapper { display: none; }
 }
 
 /* ===== SECTION LOCATION ===== */
