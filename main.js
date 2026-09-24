@@ -1,4 +1,4 @@
-﻿// ===== HEADER SCROLL BEHAVIOR =====
+// ===== HEADER SCROLL BEHAVIOR =====
 const header = document.getElementById('header');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 20) {
@@ -82,7 +82,7 @@ sections.forEach(s => sectionObserver.observe(s));
 
 // ===== COUNTER ANIMATION FOR STATS =====
 function animateCounter(el, target, duration = 1500) {
-  const start = 0;
+  let start = 0;
   const step = (timestamp) => {
     if (!start) start = timestamp;
     const progress = Math.min((timestamp - start) / duration, 1);
